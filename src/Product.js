@@ -1,27 +1,37 @@
 import React from "react";
 import "./Product.css";
 import StarIcon from "@material-ui/icons/Star";
+import StarHalfIcon from "@material-ui/icons/StarHalf";
 
-const Product = () => {
+const Product = ({ title, img, price, rating }) => {
+  const showStars = (rating) => {
+    if (!rating || Math.floor(rating) === 0 || typeof rating === "undefined") {
+      return <p>'RATING YOK'</p>;
+    } else {
+      const starsArray = Array.apply(null, Array(Math.floor(rating)));
+      if (rating % 1 === 0) {
+        starsArray.forEach(() => {
+          console.log("TAM SAYi");
+          return <p>TAM SAYI</p>;
+        });
+      } else {
+        console.log("kusuratli");
+        return <p>'KUSURATLI'</p>;
+      }
+    }
+  };
+
   return (
     <div className='product'>
       <div className='product-info'>
-        <p>Yeni bir urun</p>
+        <p>{title}</p>
         <p className='product-price'>
           <small>$</small>
-          <strong> 20.99</strong>
+          <strong> {price}</strong>
         </p>
+        <div className='product-rating'>{showStars(rating)}</div>
       </div>
-      <div className='product-rating'>
-        <StarIcon fontSize='small' />
-        <StarIcon fontSize='small' />
-        <StarIcon fontSize='small' />
-        <StarIcon fontSize='small' />
-      </div>
-      <img
-        src='https://images-na.ssl-images-amazon.com/images/I/81rQwYqpA8L._AC_UL1500_.jpg'
-        alt=''
-      />
+      <img src={img} alt='' />
       <button>Add to basket</button>
     </div>
   );

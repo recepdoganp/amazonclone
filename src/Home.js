@@ -12,8 +12,18 @@ const Home = () => {
           alt=''
         />
         <div className='home-row'>
-          <Product />
-          <Product />
+          <Product
+            title={"PS4 - 500 GB F Chassis, Black"}
+            img='https://images-na.ssl-images-amazon.com/images/I/51yjk3dvfiL._AC_SL1500_.jpg'
+            price={279.99}
+            rating={5}
+          />
+          <Product
+            title={`Vans Ward Hi Suede / Canvas, Women's High Neck Sneakers`}
+            img='https://images-na.ssl-images-amazon.com/images/I/81rQwYqpA8L._AC_UL1500_.jpg'
+            price={79.99}
+            rating={4.5}
+          />
         </div>
         <div className='home-row'>
           <Product />
