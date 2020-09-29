@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import "./Product.css";
 import StarIcon from "@material-ui/icons/Star";
 import StarHalfIcon from "@material-ui/icons/StarHalf";
@@ -6,17 +6,30 @@ import StarHalfIcon from "@material-ui/icons/StarHalf";
 const Product = ({ title, img, price, rating }) => {
   const showStars = (rating) => {
     if (!rating || Math.floor(rating) === 0 || typeof rating === "undefined") {
-      return <p>'RATING YOK'</p>;
+      return (
+        <p style={{ fontSize: 12, marginTop: 12 }}>
+          No rating available for this product, not enough rating has been
+          provided yet
+        </p>
+      );
     } else {
       const starsArray = Array.apply(null, Array(Math.floor(rating)));
       if (rating % 1 === 0) {
-        starsArray.forEach(() => {
-          console.log("TAM SAYi");
-          return <p>TAM SAYI</p>;
+        return starsArray.map(() => {
+          return <StarIcon />;
         });
       } else {
-        console.log("kusuratli");
-        return <p>'KUSURATLI'</p>;
+        return starsArray.map((star, index) => {
+          if (index === starsArray.length - 1) {
+            return (
+              <Fragment>
+                <StarIcon />
+                <StarHalfIcon />
+              </Fragment>
+            );
+          }
+          return <StarIcon />;
+        });
       }
     }
   };
