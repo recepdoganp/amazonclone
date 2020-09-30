@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 const Header = () => {
   return (

@@ -2,8 +2,13 @@ import React, { Fragment } from "react";
 import "./Product.css";
 import StarIcon from "@material-ui/icons/Star";
 import StarHalfIcon from "@material-ui/icons/StarHalf";
+import { useStateValue } from "./StateProvider";
 
-const Product = ({ title, img, price, rating }) => {
+const Product = ({ id, title, img, price, rating }) => {
+  // Initialize Context API for dispatching an action
+  const [state, dispatch] = useStateValue();
+
+  console.log(state.basket);
   const showStars = (rating) => {
     if (!rating || Math.floor(rating) === 0 || typeof rating === "undefined") {
       return (
@@ -34,6 +39,19 @@ const Product = ({ title, img, price, rating }) => {
     }
   };
 
+  const addToBasket = () => {
+    // dispatch the item to Context API
+    dispatch({
+      type: "ADD_TO_BASKET",
+      item: {
+        id,
+        title,
+        img,
+        price,
+        rating,
+      },
+    });
+  };
   return (
     <div className='product'>
       <div className='product-info'>
@@ -45,7 +63,7 @@ const Product = ({ title, img, price, rating }) => {
         <div className='product-rating'>{showStars(rating)}</div>
       </div>
       <img src={img} alt='' />
-      <button>Add to basket</button>
+      <button onClick={addToBasket}>Add to basket</button>
     </div>
   );
 };
