@@ -76,3 +76,7 @@
 .header-basketCount {
   margin: 0 10px;
 }
+
+.header-itemAdded {
+  color: #cd9042;
+}

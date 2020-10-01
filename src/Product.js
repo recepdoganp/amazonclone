@@ -8,7 +8,6 @@ const Product = ({ id, title, img, price, rating }) => {
   // Initialize Context API for dispatching an action
   const [state, dispatch] = useStateValue();
 
-  console.log(state.basket);
   const showStars = (rating) => {
     if (!rating || Math.floor(rating) === 0 || typeof rating === "undefined") {
       return (
