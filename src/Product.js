@@ -1,42 +1,14 @@
-import React, { Fragment } from "react";
+import React from "react";
 import "./Product.css";
-import StarIcon from "@material-ui/icons/Star";
-import StarHalfIcon from "@material-ui/icons/StarHalf";
+
 import { useStateValue } from "./StateProvider";
+
+// utilities
+import { showStars } from "./utils";
 
 const Product = ({ id, title, img, price, rating }) => {
   // Initialize Context API for dispatching an action
   const [state, dispatch] = useStateValue();
-
-  const showStars = (rating) => {
-    if (!rating || Math.floor(rating) === 0 || typeof rating === "undefined") {
-      return (
-        <p style={{ fontSize: 12, marginTop: 12 }}>
-          No rating available for this product, not enough rating has been
-          provided yet
-        </p>
-      );
-    } else {
-      const starsArray = Array.apply(null, Array(Math.floor(rating)));
-      if (rating % 1 === 0) {
-        return starsArray.map(() => {
-          return <StarIcon />;
-        });
-      } else {
-        return starsArray.map((star, index) => {
-          if (index === starsArray.length - 1) {
-            return (
-              <Fragment>
-                <StarIcon />
-                <StarHalfIcon />
-              </Fragment>
-            );
-          }
-          return <StarIcon />;
-        });
-      }
-    }
-  };
 
   const addToBasket = () => {
     // dispatch the item to Context API

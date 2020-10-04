@@ -17,7 +17,7 @@ const Home = () => {
             title={"PS4 - 500 GB F Chassis, Black"}
             img='https://images-na.ssl-images-amazon.com/images/I/51yjk3dvfiL._AC_SL1500_.jpg'
             price={279.99}
-            rating={5}
+            rating={6}
           />
           <Product
             id='13123345345123123'

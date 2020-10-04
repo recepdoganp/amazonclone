@@ -7,18 +7,11 @@ import CurrencyFormat from "react-currency-format";
 // Context API
 import { useStateValue } from "./StateProvider";
 
+// utility functions
+import { calculateTotalPrice } from "./utils";
+
 const Subtotal = () => {
   const [{ basket }, dispatch] = useStateValue();
-
-  const calculateTotalPrice = (items) => {
-    let totalPrice = 0;
-    if (items) {
-      items.forEach((item) => {
-        totalPrice = totalPrice + item.price;
-      });
-    }
-    return totalPrice;
-  };
 
   return (
     <div className='subtotal'>
