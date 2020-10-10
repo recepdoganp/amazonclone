@@ -6,9 +6,9 @@ import { useStateValue } from "./StateProvider";
 // utilities
 import { showStars } from "./utils";
 
-const Product = ({ id, title, img, price, rating }) => {
+const Product = ({ id, title, img, priceTR, priceUSD, priceEUR, rating }) => {
   // Initialize Context API for dispatching an action
-  const [state, dispatch] = useStateValue();
+  const [{ location }, dispatch] = useStateValue();
 
   const addToBasket = () => {
     // dispatch the item to Context API
@@ -18,7 +18,9 @@ const Product = ({ id, title, img, price, rating }) => {
         id,
         title,
         img,
-        price,
+        priceTR,
+        priceUSD,
+        priceEUR,
         rating,
       },
     });
@@ -28,8 +30,21 @@ const Product = ({ id, title, img, price, rating }) => {
       <div className='product-info'>
         <p>{title}</p>
         <p className='product-price'>
-          <small>$</small>
-          <strong> {price}</strong>
+          <small>
+            {location.currency === "TRY"
+              ? "₺"
+              : location.currency === "EUR"
+              ? "€"
+              : "$"}
+          </small>
+          <strong>
+            {" "}
+            {location?.currency === "TRY"
+              ? priceTR
+              : location.currency === "EUR"
+              ? priceEUR
+              : priceUSD}
+          </strong>
         </p>
         <div className='product-rating'>{showStars(rating)}</div>
       </div>

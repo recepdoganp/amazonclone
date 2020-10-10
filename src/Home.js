@@ -13,49 +13,61 @@ const Home = () => {
         />
         <div className='home-row'>
           <Product
-            id='111231334534512312'
+            id='111231334523423434512312'
             title={"PS4 - 500 GB F Chassis, Black"}
             img='https://images-na.ssl-images-amazon.com/images/I/51yjk3dvfiL._AC_SL1500_.jpg'
-            price={279.99}
+            priceTR={279.99}
+            priceUSD={99.99}
+            priceEUR={79.99}
             rating={6}
           />
           <Product
-            id='13123345345123123'
+            id='13123453453453345345123123'
             title={`Vans Ward Hi Suede / Canvas, Women's High Neck Sneakers`}
             img='https://images-na.ssl-images-amazon.com/images/I/81rQwYqpA8L._AC_UL1500_.jpg'
-            price={79.99}
+            priceTR={79.99}
+            priceUSD={49.99}
+            priceEUR={39.99}
             rating={4.5}
           />
         </div>
         <div className='home-row'>
           <Product
-            id='1312313443534523123'
+            id='13123134435345233345345345354123'
             title={`Vans Ward Hi Suede / Canvas, Women's High Neck Sneakers`}
             img='https://images-na.ssl-images-amazon.com/images/I/81rQwYqpA8L._AC_UL1500_.jpg'
-            price={59.99}
+            priceTR={59.99}
+            priceUSD={39.99}
+            priceEUR={29.99}
             rating={4.9}
           />
           <Product
-            id='13112312323123123'
+            id='1311231123123123132323123123'
             title={`Vans Ward Hi Suede / Canvas, Women's High Neck Sneakers`}
             img='https://images-na.ssl-images-amazon.com/images/I/81rQwYqpA8L._AC_UL1500_.jpg'
-            price={79.99}
+            priceTR={79.99}
+            priceUSD={49.99}
+            priceEUR={39.99}
             rating={4.5}
           />
           <Product
-            id='13234234123123123'
+            id='1323423467876868123123123'
             title={`Vans Ward Hi Suede / Canvas, Women's High Neck Sneakers`}
             img='https://images-na.ssl-images-amazon.com/images/I/81rQwYqpA8L._AC_UL1500_.jpg'
-            price={79.99}
+            priceTR={79.99}
+            priceUSD={49.99}
+            priceEUR={39.99}
             rating={3.6}
           />
         </div>
         <div className='home-row'>
           <Product
-            id='131231234564564123'
+            id='131231563635645234564564123'
             title={`Vans Ward Hi Suede / Canvas, Women's High Neck Sneakers`}
             img='https://images-na.ssl-images-amazon.com/images/I/81rQwYqpA8L._AC_UL1500_.jpg'
-            price={79.99}
+            priceTR={79.99}
+            priceUSD={49.99}
+            priceEUR={39.99}
             rating={0.8}
           />
         </div>

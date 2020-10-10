@@ -1,6 +1,8 @@
 export const initialState = {
   basket: [],
   user: null,
+  location: {},
+  loading: false,
 };
 
 const reducer = (state, action) => {
@@ -32,6 +34,24 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    }
+    case "SET_LOCATION": {
+      return {
+        ...state,
+        location: action.payload,
+      };
+    }
+    case "SET_LOADING": {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case "STOP_LOADING": {
+      return {
+        ...state,
+        loading: false,
       };
     }
     default:

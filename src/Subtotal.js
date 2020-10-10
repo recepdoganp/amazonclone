@@ -11,7 +11,13 @@ import { useStateValue } from "./StateProvider";
 import { calculateTotalPrice } from "./utils";
 
 const Subtotal = () => {
-  const [{ basket }, dispatch] = useStateValue();
+  const [
+    {
+      basket,
+      location: { currency },
+    },
+    dispatch,
+  ] = useStateValue();
 
   return (
     <div className='subtotal'>
@@ -27,7 +33,7 @@ const Subtotal = () => {
           </Fragment>
         )}
         decimalScale={2}
-        value={calculateTotalPrice(basket)}
+        value={calculateTotalPrice(basket, currency)}
         displayType='text'
         thousandSeperator={true}
         prefix={"$"}

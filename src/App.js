@@ -15,8 +15,13 @@ import { auth } from "./firebase";
 // Context API
 import { useStateValue } from "./StateProvider";
 
+// utils
+// import { getGeoInfo } from "./utils";
+import axios from "axios";
+
 function App() {
-  const [{}, dispatch] = useStateValue();
+  const [{ loading }, dispatch] = useStateValue();
+
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -34,24 +39,44 @@ function App() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    dispatch({ type: "SET_LOADING" });
+    axios
+      .get("https://ipapi.co/json/")
+      .then((response) => {
+        let data = response.data;
+        dispatch({
+          type: "SET_LOCATION",
+          payload: data,
+        });
+        dispatch({ type: "STOP_LOADING" });
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }, []);
+
   return (
-    // BEM
     <Router>
       <div className='app'>
-        <Switch>
-          <Route path='/login'>
-            <Login />
-          </Route>
-          <Route path='/checkout'>
-            <Header />
-            <Checkout />
-          </Route>
-          {/* Default Route always at the bottom */}
-          <Route path='/'>
-            <Header />
-            <Home />
-          </Route>
-        </Switch>
+        {loading ? (
+          <p style={{ background: "red", height: "100vh" }}>LOADING......</p>
+        ) : (
+          <Switch>
+            <Route path='/login'>
+              <Login />
+            </Route>
+            <Route path='/checkout'>
+              <Header />
+              <Checkout />
+            </Route>
+            <Route path='/'>
+              <Header />
+              <Home />
+            </Route>
+          </Switch>
+        )}
       </div>
     </Router>
   );

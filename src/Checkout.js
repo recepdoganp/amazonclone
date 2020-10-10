@@ -1,6 +1,9 @@
 import React from "react";
 import "./Checkout.css";
 
+// Animation
+import FlipMove from "react-flip-move";
+
 // Context API
 import { useStateValue } from "./StateProvider";
 
@@ -8,8 +11,8 @@ import { useStateValue } from "./StateProvider";
 import Subtotal from "./Subtotal";
 import CheckoutProduct from "./CheckoutProduct";
 
-function Checkout() {
-  const [{ basket }, dispatch] = useStateValue();
+const Checkout = () => {
+  const [{ basket, user }, dispatch] = useStateValue();
 
   return (
     <div className='checkout'>
@@ -19,19 +22,27 @@ function Checkout() {
           alt=''
           className='checkout-ad'
         />
+        <h3>Hello, {user?.email}</h3>
         <h2 className='checkout-title'>Your shopping basket</h2>
         {basket?.length > 0 ? (
-          basket.map(({ id, title, img, price, rating }, i) => {
-            return (
-              <CheckoutProduct
-                id={id}
-                title={title}
-                image={img}
-                price={price}
-                rating={rating}
-              />
-            );
-          })
+          <FlipMove leaveAnimation='accordionVertical'>
+            {basket.map(
+              ({ id, title, img, priceTR, priceUSD, priceEUR, rating }, i) => {
+                return (
+                  <CheckoutProduct
+                    key={i}
+                    id={id}
+                    title={title}
+                    image={img}
+                    priceTR={priceTR}
+                    priceUSD={priceUSD}
+                    priceEUR={priceEUR}
+                    rating={rating}
+                  />
+                );
+              }
+            )}
+          </FlipMove>
         ) : (
           <div className='checkoutProduct'>
             <p>There is no item in your basket</p>
@@ -43,6 +54,6 @@ function Checkout() {
       </div>
     </div>
   );
-}
+};
 
 export default Checkout;

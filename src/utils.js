@@ -34,11 +34,18 @@ export const showStars = (rating) => {
 };
 
 // Calculate the total price in the basket
-export const calculateTotalPrice = (items) => {
+export const calculateTotalPrice = (items, currency) => {
   let totalPrice = 0;
   if (items) {
     items.forEach((item) => {
-      totalPrice += item.price;
+      totalPrice +=
+        item[
+          currency === "TRY"
+            ? "priceTR"
+            : currency === "EUR"
+            ? "priceEUR"
+            : "priceUSD"
+        ];
     });
   }
   return totalPrice;
