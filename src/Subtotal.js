@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { useHistory } from "react-router-dom";
 import "./Subtotal.css";
 
 // Modules
@@ -11,6 +12,7 @@ import { useStateValue } from "./StateProvider";
 import { calculateTotalPrice } from "./utils";
 
 const Subtotal = () => {
+  const history = useHistory();
   const [
     {
       basket,
@@ -38,7 +40,9 @@ const Subtotal = () => {
         thousandSeperator={true}
         prefix={"$"}
       ></CurrencyFormat>
-      <button>Proceed to checkout</button>
+      <button onClick={(e) => history.push("/payment")}>
+        Proceed to checkout
+      </button>
     </div>
   );
 };
