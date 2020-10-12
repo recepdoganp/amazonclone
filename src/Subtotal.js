@@ -27,7 +27,7 @@ const Subtotal = () => {
         renderText={(value) => (
           <Fragment>
             <p>
-              Subtotal ({basket?.length} items): <strong>{value}</strong>
+              Subtotal {basket?.length} items: <strong> {value}</strong>
             </p>
             <small className='subtotal-gift'>
               <input type='checkbox' /> This order contains a gift
@@ -38,7 +38,7 @@ const Subtotal = () => {
         value={calculateTotalPrice(basket, currency)}
         displayType='text'
         thousandSeperator={true}
-        prefix={"$"}
+        prefix={currency === "TRY" ? "₺" : currency === "EUR" ? "€" : "$"}
       ></CurrencyFormat>
       <button onClick={(e) => history.push("/payment")}>
         Proceed to checkout

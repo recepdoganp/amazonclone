@@ -17,8 +17,15 @@ import { auth } from "./firebase";
 import { useStateValue } from "./StateProvider";
 
 // utils
-// import { getGeoInfo } from "./utils";
 import axios from "axios";
+
+// stripe
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const promise = loadStripe(
+  "pk_test_51HbXlPBSkxooKlJBEg9vMJxwZCUqE6MELhK3nw7lER7WtWjQDgyttpt3nyidvEl9sisICoVWZFsroXurSQVhvJQ6003lVlqXcZ"
+);
 
 function App() {
   const [{ loading }, dispatch] = useStateValue();
@@ -80,8 +87,9 @@ function App() {
             </Route>
             <Route path='/payment'>
               <Header />
-              <Payment />
-              <h1>THIS IS THE PAYMENT ROUTE</h1>
+              <Elements stripe={promise}>
+                <Payment />
+              </Elements>
             </Route>
             <Route path='/'>
               <Header />
