@@ -9,7 +9,7 @@ const stripe = require("stripe")(
 const app = express();
 
 // - Middlewares
-app.use(cors());
+app.use(cors({ origin: true }));
 app.use(express.json()); // receive and send data in json format
 
 // - API routes
@@ -18,31 +18,28 @@ app.get("/", (req, res) => {
 });
 
 app.post("/payments/create", async (req, res) => {
-  const total = req.params.total;
-  const currency = req.params.currency;
-  console.log(total);
-  console.log(currency);
+  const total = req.query.total;
+  const currency = req.query.currency;
+
   console.log(
-    `Payment request is received with amount of ====> ${currency & "" & total}`
+    `Payment request is received with amount of ====> ${parseInt(total).toFixed(
+      0
+    )}`
   );
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: total, // subunits of the currency
-    currency: currency,
-  });
-  // CREATED SUCCESSFULLY
-  res.status(201).send({ clientSecret: paymentIntent.clientSecret });
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: parseInt(total),
+      currency: currency,
+    });
+    // CREATED SUCCESSFULLY
+    if (paymentIntent) {
+      res.status(201).send({ clientSecret: paymentIntent.client_secret });
+    }
+  } catch (err) {
+    return console.log(err.message);
+  }
 });
 
 // - Listen command
 exports.api = functions.https.onRequest(app);
-
-// example end point
-// http://localhost:5001/clone-bc95a/us-central1/api
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });

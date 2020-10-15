@@ -42,16 +42,20 @@ const Payment = () => {
 
   useEffect(() => {
     const getClientSecret = async () => {
-      const { response } = await axios({
-        method: "post",
-        // stripe expects the total sum in a currencies subunits
-        url: `/payments/create?total=${
-          calculateTotalPrice(basket, currency) * 100
-        }&currency=${
-          currency === "TRY" ? "try" : currency === "EUR" ? "eur" : "usd"
-        }`,
-      });
-      setClientSecret(response.data.clientSecret);
+      try {
+        const response = await axios({
+          method: "post",
+          // stripe expects the total sum in a currencies subunits
+          url: `/payments/create?total=${
+            calculateTotalPrice(basket, currency) * 100
+          }&currency=${
+            currency === "TRY" ? "try" : currency === "EUR" ? "eur" : "usd"
+          }`,
+        });
+        return setClientSecret(response.data.clientSecret);
+      } catch (err) {
+        console.error(err.message);
+      }
     };
     getClientSecret();
   }, [basket]);
@@ -68,10 +72,18 @@ const Payment = () => {
         },
       })
       .then(({ paymentIntent }) => {
-        setSucceeded(true);
-        setError(null);
-        setProcessing(false);
-        history.replace("/orders");
+        console.log(paymentIntent);
+        console.log(error);
+
+        if (paymentIntent && paymentIntent.status === "succeeded") {
+          setSucceeded(true);
+          setError(null);
+          setProcessing(false);
+          history.replace("/orders");
+        } else {
+          alert(error);
+          setProcessing(false);
+        }
       });
   };
 
@@ -132,7 +144,11 @@ const Payment = () => {
                     currency === "TRY" ? "₺" : currency === "EUR" ? "€" : "$"
                   }
                 ></CurrencyFormat>
-                <button disabled={processing || disabled || succeeded}>
+                <button
+                  disabled={
+                    processing || disabled || succeeded || basket?.length === 0
+                  }
+                >
                   <span>{processing ? <p>Processing...</p> : "Pay Now"}</span>
                 </button>
               </div>
