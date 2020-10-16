@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./Subtotal.css";
 
@@ -13,13 +13,35 @@ import { calculateTotalPrice } from "./utils";
 
 const Subtotal = () => {
   const history = useHistory();
+  const [disabled, setDisabled] = useState(true);
   const [
     {
       basket,
+      user,
       location: { currency },
     },
     dispatch,
   ] = useStateValue();
+
+  useEffect(() => {
+    if (basket.length > 0) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [basket.length]);
+
+  const handleProceedCheckout = (e) => {
+    if (!disabled && user) {
+      history.push("/payment");
+    } else {
+      if (disabled) {
+        alert("There is no item in the basket!");
+      } else if (!user) {
+        alert("In order to proceed you have to sign in!");
+      }
+    }
+  };
 
   return (
     <div className='subtotal'>
@@ -40,9 +62,7 @@ const Subtotal = () => {
         thousandSeperator={true}
         prefix={currency === "TRY" ? "₺" : currency === "EUR" ? "€" : "$"}
       ></CurrencyFormat>
-      <button onClick={(e) => history.push("/payment")}>
-        Proceed to checkout
-      </button>
+      <button onClick={handleProceedCheckout}>Proceed to checkout</button>
     </div>
   );
 };

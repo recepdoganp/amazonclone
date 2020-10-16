@@ -20,6 +20,9 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 // utility functions
 import { calculateTotalPrice } from "./utils";
 
+// firebase
+import { db } from "./firebase";
+
 const Payment = () => {
   const history = useHistory();
   const [
@@ -76,10 +79,25 @@ const Payment = () => {
         console.log(error);
 
         if (paymentIntent && paymentIntent.status === "succeeded") {
-          setSucceeded(true);
-          setError(null);
-          setProcessing(false);
-          history.replace("/orders");
+          db.collection("users")
+            .doc(user?.uid)
+            .collection("orders")
+            .doc(paymentIntent.id)
+            .set({
+              basket: basket,
+              amount: paymentIntent.amount / 100,
+              currency: paymentIntent.currency,
+              created: paymentIntent.created,
+            })
+            .then((res) => {
+              console.log(res);
+              setSucceeded(true);
+              setError(null);
+              setProcessing(false);
+              dispatch({ type: "EMPTY_BASKET" });
+              history.replace("/orders");
+            })
+            .catch((err) => console.error(err.message));
         } else {
           alert(error);
           setProcessing(false);
@@ -152,7 +170,7 @@ const Payment = () => {
                   <span>{processing ? <p>Processing...</p> : "Pay Now"}</span>
                 </button>
               </div>
-              {error && <div>{error}</div>}
+              {error && <div style={{ color: "red" }}>{error}</div>}
             </form>
           </div>
         </div>
