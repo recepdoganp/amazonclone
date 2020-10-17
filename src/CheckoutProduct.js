@@ -8,7 +8,10 @@ import { useStateValue } from "./StateProvider";
 import { showStars } from "./utils";
 
 const CheckoutProduct = forwardRef(
-  ({ id, image, title, priceTR, priceUSD, priceEUR, rating }, ref) => {
+  (
+    { id, image, title, priceTR, priceUSD, priceEUR, rating, hideButton },
+    ref
+  ) => {
     const [{ location }, dispatch] = useStateValue();
 
     const removeFromBasket = () => {
@@ -41,7 +44,9 @@ const CheckoutProduct = forwardRef(
             </strong>
           </p>
           <div className='product-rating'>{showStars(rating)}</div>
-          <button onClick={removeFromBasket}>Remove from basket</button>
+          {!hideButton && (
+            <button onClick={removeFromBasket}>Remove from basket</button>
+          )}
         </div>
       </div>
     );

@@ -5,6 +5,7 @@ import "./Order.css";
 import CheckoutProduct from "./CheckoutProduct";
 
 // Modules
+import CurrencyFormat from "react-currency-format";
 const moment = require("../node_modules/moment/moment");
 
 const Order = ({ order }) => {
@@ -26,9 +27,26 @@ const Order = ({ order }) => {
             priceUSD={priceUSD}
             priceEUR={priceEUR}
             rating={rating}
+            hideButton
           />
         )
       )}
+      <CurrencyFormat
+        renderText={(value) => (
+          <h3 className='order_total'>Order total: {value}</h3>
+        )}
+        decimalScale={2}
+        value={order.data.amount}
+        displayType='text'
+        thousandSeperator={true}
+        prefix={
+          order.data.currency === "try"
+            ? "₺"
+            : order.data.currency === "eur"
+            ? "€"
+            : "$"
+        }
+      ></CurrencyFormat>
     </div>
   );
 };

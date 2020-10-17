@@ -21,7 +21,6 @@ const Orders = () => {
         .onSnapshot((snapshot) => {
           setOrders(
             snapshot.docs.map((doc) => {
-              console.log(doc.data());
               return {
                 id: doc.id,
                 data: doc.data(),

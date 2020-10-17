@@ -1,5 +1,10 @@
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useEffect, Fragment } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 // Style
 import "./App.css";
 
@@ -29,7 +34,7 @@ const promise = loadStripe(
 );
 
 function App() {
-  const [{ loading }, dispatch] = useStateValue();
+  const [{ loading, user }, dispatch] = useStateValue();
 
   useEffect(() => {
     dispatch({ type: "SET_LOADING" });
